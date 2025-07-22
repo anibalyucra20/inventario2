@@ -165,6 +165,108 @@ function cargar_sede_filtro(sedes) {
     document.getElementById('busqueda_tabla_sede').innerHTML = lista_sede;
 }
 
-
-
 // ------------------------------------------- FIN DE DATOS DE CARGA PARA FILTRO DE BUSQUEDA -----------------------------------------------
+
+async function validar_datos_reset_password() {
+    let id = document.getElementById('data').value;
+    let token = document.getElementById('data2').value;
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('token', token);
+    formData.append('sesion', '');
+    try {
+        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=validar_datos_reset_password', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: formData
+        });
+        let json = await respuesta.json();
+        if (json.status == false) {
+            Swal.fire({
+                type: 'error',
+                title: 'Error de Link',
+                text: "Link caducado, verifique su correo",
+                confirmButtonClass: 'btn btn-confirm mt-2',
+                footer: '',
+                timer: 1000
+            });
+            let formulario = document.getElementById('frm_reset_password');
+            formulario.innerHTML = `texto de prueba`;
+            //location.replace(base_url + "login");
+        }
+    } catch (e) {
+        console.log("Error al validar datos" + e);
+    }
+}
+
+function validar_imputs_password() {
+    let pass1 = document.getElementById('password').value;
+    let pass2 = document.getElementById('password1').value;
+    if (pass1 !== pass2) {
+        Swal.fire({
+            type: 'error',
+            title: 'Error',
+            text: "Contraseñas no coinciden",
+            footer: '',
+            timer: 1500
+        });
+        return;
+    }
+    if (pass1.length < 8 && pass2.length < 8) {
+        Swal.fire({
+            type: 'error',
+            title: 'Error',
+            text: "La contraseña tiene que ser minimo 8 caracteres",
+            footer: '',
+            timer: 1500
+        });
+        return;
+    } else {
+        actualizar_password();
+    }
+}
+async function actualizar_password() {
+    //enviar informacion de password y id al controlador usuario
+    // recibir informacion y encriptar la nueva contraseña
+    //guardar en base de datos y  actualizar campo de reset_password = 0 y token_password = ''
+    // notificar a usuario sobre el estado del proceso
+
+    let id = document.getElementById('data').value;
+    let token = document.getElementById('data2').value;
+    let password = document.getElementById('password').value;
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('token', token);
+    formData.append('password', password);
+    formData.append('sesion', '');
+    try {
+        let respuesta = await fetch(base_url_server + 'src/control/Usuario.php?tipo=actualizar_password_reset', {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            body: formData
+        });
+        let json = await respuesta.json();
+        if (json.status) {
+            Swal.fire({
+                type: 'success',
+                title: 'Perfecto',
+                text: "La contraseña se actualizó correctamente",
+                footer: '',
+                timer: 1500
+            });
+        }else{
+            Swal.fire({
+                type: 'error',
+                title: 'Error',
+                text: "Ocurrió un error ac actualizar la contraseña",
+                footer: '',
+                timer: 1500
+            });
+        }
+    } catch (e) {
+        console.log("Error al validar datos" + e);
+    }
+}
+

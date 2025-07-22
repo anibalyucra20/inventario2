@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,19 +93,23 @@
 </head>
 
 <body>
+  <input type="hidden" id="data" value='<?php echo $_GET['data']; ?>'>
+  <input type="hidden" id="data2" value='<?php echo urldecode($_GET['data2']); ?>'>
   <div class="login-container">
-    <h1>Iniciar Sesión</h1>
+    <h1>Recuperar contraseña</h1>
     <img src="https://sispa.iestphuanta.edu.pe/img/logo.png" alt="" width="100%">
     <h4>Sistema de Control de Inventario</h4>
-    <form id="frm_login">
-      <input type="text" name="dni" id="dni" placeholder="DNI" required>
-      <input type="password" name="password" id="password" placeholder="Contraseña" required>
-      <button type="submit">Ingresar</button>
+    <form id="frm_reset_password">
+      <input type="text" name="password" id="password" placeholder="Nueva Contraseña" required>
+      <input type="text" name="password1" id="password1" placeholder="Confirmar Contraseña" required>
+      <button type="button" onclick="validar_imputs_password();">Actualizar contraseña</button>
     </form>
-    <a href="#">¿Olvidaste tu contraseña?</a>
   </div>
 </body>
-<script src="<?php echo BASE_URL; ?>src/view/js/sesion.js"></script>
+<script src="<?php echo BASE_URL; ?>src/view/js/principal.js"></script>
+<script>
+  validar_datos_reset_password();
+</script>
 <!-- Sweet Alerts Js-->
 <script src="<?php echo BASE_URL ?>src/view/pp/plugins/sweetalert2/sweetalert2.min.js"></script>
 

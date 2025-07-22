@@ -163,7 +163,7 @@ async function registrar_usuario() {
     let apellidos_nombres = document.querySelector('#apellidos_nombres').value;
     let correo = document.querySelector('#correo').value;
     let telefono = document.querySelector('#telefono').value;
-    if (dni == "" || apellidos_nombres == "" ||correo == "" || telefono == "") {
+    if (dni == "" || apellidos_nombres == "" || correo == "" || telefono == "") {
         Swal.fire({
             type: 'error',
             title: 'Error',
@@ -214,14 +214,13 @@ async function registrar_usuario() {
         console.log("Oops, ocurrio un error " + e);
     }
 }
-
 async function actualizarUsuario(id) {
     let dni = document.getElementById('dni' + id).value;
     let nombres_apellidos = document.querySelector('#nombres_apellidos' + id).value;
     let correo = document.querySelector('#correo' + id).value;
     let telefono = document.querySelector('#telefono' + id).value;
     let estado = document.querySelector('#estado' + id).value;
-    if (dni == "" || nombres_apellidos == "" || correo == "" || telefono == ""||  estado == "") {
+    if (dni == "" || nombres_apellidos == "" || correo == "" || telefono == "" || estado == "") {
         Swal.fire({
             type: 'error',
             title: 'Error',
